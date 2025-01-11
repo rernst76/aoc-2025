@@ -8,5 +8,7 @@
 )
 
 (let [input (get-input "day1part1sample.input")]
-  (apply map list input)
+  (map abs(apply map - (apply map list input) ))
 )
+
+;; When to use threading macro: https://stuartsierra.com/2018/07/06/threading-with-style
