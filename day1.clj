@@ -8,4 +8,5 @@
 )
 
 (let [input (get-input "day1part1sample.input")]
+  (apply map list input)
 )
