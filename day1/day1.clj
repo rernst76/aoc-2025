@@ -23,7 +23,7 @@
        (map abs) ;; Take abs of the calculated distances
        (reduce +))) ;; Reduce with '+' operator to get answer
 
-(solve-p1 "day1part1.input") ; 2430334
+(solve-p1 "day1/day1part1.input") ; 2430334
 
 
 (defn seq-count 
@@ -47,5 +47,5 @@
         left) )
       )))
 
-(solve-p2 "day1part1.input") ; 28786472
+(solve-p2 "day1/day1part1.input") ; 28786472
 
