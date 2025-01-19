@@ -1,5 +1,6 @@
 (ns aoc.day2.core
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.math :refer [signum]]))
 
 (defn get-input [path]
   ;; Returns the innput as a list of two lists where each
@@ -13,7 +14,10 @@
 
 (defn safe-magnitude? [x] (and (> x 0) (<= x 3)))
 
-(defn safe-direction? [x] (= x 1))
+(defn safe-direction? [xs]
+  (let [signs (map #(signum %) xs)]
+    (or (every? pos? signs)
+        (every? neg? signs))))
 
 (defn solve-p1 [path]
   (->> (get-input path)

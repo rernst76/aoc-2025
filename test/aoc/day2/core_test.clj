@@ -12,9 +12,9 @@
     (is (true? (safe-direction? [-1]))))
 
   (testing "mixed changes return false"
-    (is (true? (safe-direction? [1 -1])))
-    (is (true? (safe-direction? [-2 1 3]))))
+    (is (false? (safe-direction? [1 -1])))
+    (is (false? (safe-direction? [-2 1 3]))))
 
   (testing "zero changes return false"
-    (is (true? (safe-direction? [0 0])))
-    (is (true? (safe-direction? [1 0 1])))))
+    (is (false? (safe-direction? [0 0])))
+    (is (false? (safe-direction? [1 0 1])))))
