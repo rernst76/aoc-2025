@@ -3,12 +3,10 @@
             [clojure.math :refer [signum]]))
 
 (defn get-input [path]
-  ;; Returns the innput as a list of two lists where each
-  ;; list correspondes to one column of the input
-  (->> (slurp path) ;; Use threading macro to chain the operations
-       str/split-lines ;; Start by splitting on lines in slurped file
-       (map #(str/split % #"\s+")) ;; map split function and split on whitespace
-       (map (fn [pair] (map #(Integer/parseInt %) pair))))) ;; Parse as int, use anonymous function to handle pairs 
+  (->> (slurp path)
+       str/split-lines
+       (map #(str/split % #"\s+"))
+       (map (fn [pair] (map #(Integer/parseInt %) pair)))))
 
 (defn seq-diff [xs] (map - xs (rest xs)))
 
