@@ -14,6 +14,7 @@
    vec))
 
 ;; Define compass transformations
+(defn NOP [x y] [x y])
 (defn N [x y] [x (dec y)])
 (defn S [x y] [x (inc y)])
 (defn E [x y] [(inc x) y])
@@ -94,11 +95,47 @@
                       (vals directions))))
        (reduce + 0)))
 
+(defn pattern?
+  "Checks for a `pattern` centered at `[x y]` in `mat` by checking
+  if the neighbor values in `dirs` directions match the pattern."
+  [mat x y pattern dirs]
+  ;; return nil if pattern is not the same length as dirs
+  (when (= (count pattern) (count dirs))
+    (every? (fn [[test-char dir]]
+              (= test-char (apply at mat (dir x y))))
+            (map vector pattern dirs))))
+
+(defn backward-pattern?
+  "Checks for a backward-leaning pattern. "
+  [mat x y pattern]
+  (pattern? mat x y pattern [NW NOP SE]))
+
+(defn forward-pattern?
+  "Checks for a forward-leaning pattern."
+  [mat x y pattern]
+  (pattern? mat x y pattern [SW NOP NE]))
+
+(defn permissive-x-pattern?
+  "Checks for an X pattern made using a pattern. Pattern matches
+  both forward or backward instances of `pattern`"
+  [mat x y pattern]
+  (let [matched-patterns [pattern (str/reverse pattern)]]
+    (and (some #(backward-pattern? mat x y %) matched-patterns)
+         (some #(forward-pattern? mat x y %) matched-patterns))))
+
+(defn x-mas-pattern?
+  "Checks for an X pattern made with MAS or SAM."
+  [mat x y]
+  (permissive-x-pattern? mat x y "MAS"))
+
+(defn count-x-mas-pattern [mat]
+  (->> (find-starting-positions mat \A)
+       (map (fn [[x y]] (x-mas-pattern? mat x y)))
+       (filter true?)
+       (count)))
+
 (count-xmas (get-input test-input))
 (count-xmas (get-input input))
 
-
-
-
-
-
+(count-x-mas-pattern (get-input test-input))
+(count-x-mas-pattern (get-input input))
