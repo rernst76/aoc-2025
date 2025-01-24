@@ -1,17 +1,13 @@
 (ns aoc.day4.core
-  (:require [clojure.string :as str]
-            [aoc.util.core :refer [spy]]))
+  (:require [clojure.string :as str]))
 
 (def input "resources/day4/input")
 (def test-input "resources/day4/sample.input")
 
 (defn get-input [path]
-  (->>
-   (slurp path)
-   (str/split-lines)
-   (map vec)
-
-   vec))
+  (->> (slurp path)
+       (str/split-lines)
+       (mapv vec)))
 
 ;; Define compass transformations
 (defn NOP [x y] [x y])
@@ -73,10 +69,6 @@
         x (range (count (first mat)))
         :when (= (at mat x y) target-char)]
     [x y]))
-
-(defn find-matching-neighbors [mat [x y] target-char]
-  (->> (all-neighbors mat x y)
-       (filter #(= target-char (:val %)))))
 
 (defn find-path
   [mat [x y] direction [current-char & remaining-chars]]
